@@ -14,18 +14,56 @@
 
 // Execute `rustlings hint quiz3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
+use std::fmt;
 
-pub struct ReportCard {
-    pub grade: f32,
+pub struct ReportCard<T> {
+    pub grade: T,
     pub student_name: String,
     pub student_age: u8,
 }
 
-impl ReportCard {
+impl<T: fmt::Display> ReportCard<T> {
     pub fn print(&self) -> String {
         format!("{} ({}) - achieved a grade of {}",
             &self.student_name, &self.student_age, &self.grade)
+    }
+}
+
+enum LetterGrade {
+    APlus,
+    A,
+    AMinus,
+    BPlus,
+    B,
+    BMinus,
+    CPlus,
+    C,
+    CMinus,
+    DPlus,
+    D,
+    DMinus,
+    F
+}
+
+impl fmt::Display for LetterGrade {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let display = match self {
+            Self::APlus => "A+",
+            Self::A => "A",
+            Self::AMinus => "A-",
+            Self::BPlus => "B+",
+            Self::B => "B",
+            Self::BMinus => "B-",
+            Self::BPlus => "B+",
+            Self::C => "C",
+            Self::CMinus => "C-",
+            Self::CPlus => "C+",
+            Self::D => "D",
+            Self::DPlus => "D+",
+            Self::DMinus => "D-",
+            Self::F => "F",
+        };
+        write!(f, "{}", display)
     }
 }
 
@@ -50,7 +88,7 @@ mod tests {
     fn generate_alphabetic_report_card() {
         // TODO: Make sure to change the grade here after you finish the exercise.
         let report_card = ReportCard {
-            grade: 2.1,
+            grade: LetterGrade::APlus,
             student_name: "Gary Plotter".to_string(),
             student_age: 11,
         };
